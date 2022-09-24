@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -11,13 +12,18 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class Main {
     public static void main(String[] args) throws ParseException {
         Scanner entrada = new Scanner(System.in);
+
         String nombre = LeerNombre(entrada);
         String fechaNacimiento = LeerFechaNacimiento(entrada);
         System.out.println("Hola " + nombre + " naciste el  " + fechaNacimiento + " .");
+
         LocalDate diaDeHoy = LocalDate.now();
         LocalDate nacimiento = ConversionALocalDate(fechaNacimiento);
         long dias = CalcularDias(nacimiento, diaDeHoy);
         System.out.println("Han pasado " + dias + " dias desde que naciste.");
+
+        long edad = CalcularEdad(nacimiento, diaDeHoy);
+        System.out.println("Tienes " + edad + " años.");
     }
     private static String LeerNombre(Scanner entrada){
         System.out.println("Dime tu nombre: ");
@@ -43,5 +49,9 @@ public class Main {
     private static long CalcularDias(LocalDate nacimiento, LocalDate hoy){
         long dias = DAYS.between(nacimiento, hoy);
         return dias;
+    }
+    private static long CalcularEdad(LocalDate nacimiento, LocalDate hoy){
+        long edad = ChronoUnit.YEARS.between(nacimiento, hoy);
+        return edad;
     }
 }
